@@ -1,0 +1,6 @@
+{
+  "name": "CivicPulse AI — Universal Citizen Demand & Public Infrastructure Intelligence DPG",
+  "description": "Universal Digital Public Good platform aggregating multilingual citizen infrastructure requests via voice, text, and messaging, analyzing regional demographic indices and public capex allocations to surface spatial demand hotspots and formulate automated bankable project DPRs for policymakers worldwide.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
