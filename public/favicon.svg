@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CivicPulse AI">
+  <title>CivicPulse AI</title>
+  <desc>Rotated orange square emblem with white inner ring and indigo core — the CivicPulse AI Digital Public Good mark.</desc>
+  <rect width="64" height="64" rx="8" fill="#1e1b4b"/>
+  <g transform="translate(32 32) rotate(45)">
+    <rect x="-22" y="-22" width="44" height="44" rx="3" fill="#f97316" stroke="#fdba74" stroke-width="1.5"/>
+    <circle r="11" fill="#ffffff"/>
+    <circle r="5" fill="#1e1b4b"/>
+  </g>
+</svg>
