@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div>
+    <div className="flex flex-1 items-center justify-center text-2xl font-semibold">
       <h1>Home</h1>
     </div>
   );
