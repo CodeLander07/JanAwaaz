@@ -76,8 +76,9 @@ export default function H3HotspotMap({
 
   // ─── Handlers ────────────────────────────────────────────────────────
 
-  const handleViewStateChange = useCallback(({ viewState: vs }: { viewState: typeof viewState }) => {
-    setViewState(vs);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleViewStateChange = useCallback((params: any) => {
+    setViewState(params.viewState);
   }, []);
 
   const handleHover = useCallback(

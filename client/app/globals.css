@@ -1,26 +1,79 @@
 @import "tailwindcss";
 
-:root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-}
+/* ─── Class-based dark mode for next-themes ─────────────────────────── */
+@custom-variant dark (&:where(.dark, .dark *));
 
+/* ─── Theme Tokens ──────────────────────────────────────────────────── */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: 'Inter', var(--font-geist-sans), system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
 }
 
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+}
+
+.dark {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+/* ─── Base Styles ───────────────────────────────────────────────────── */
+
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ─── Mapbox GL Overrides ───────────────────────────────────────────── */
+/* ─── Selection ─────────────────────────────────────────────────────── */
+
+::selection {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.dark ::selection {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ─── Scrollbar (monochrome) ────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Smooth Scroll ─────────────────────────────────────────────────── */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── Mapbox GL Overrides (for /dashboard) ──────────────────────────── */
 
 .mapboxgl-ctrl-logo {
   opacity: 0.4;
@@ -31,28 +84,42 @@ body {
   font-size: 10px !important;
 }
 
-/* ─── Custom Scrollbar (dark theme) ─────────────────────────────────── */
-
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
 /* ─── Deck.gl Canvas ────────────────────────────────────────────────── */
 
 #deckgl-wrapper {
   width: 100% !important;
   height: 100% !important;
+}
+
+/* ─── Range Input Cross-Browser Reset ───────────────────────────────── */
+
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  cursor: pointer;
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #000000;
+  border: 2px solid #d4d4d8;
+  cursor: pointer;
+}
+
+.dark input[type='range']::-moz-range-thumb {
+  background: #ffffff;
+  border-color: #52525b;
+}
+
+input[type='range']::-moz-range-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: #e4e4e7;
+}
+
+.dark input[type='range']::-moz-range-track {
+  background: #27272a;
 }
