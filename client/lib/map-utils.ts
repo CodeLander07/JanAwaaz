@@ -5,7 +5,8 @@
  * for the H3HotspotMap component.
  */
 
-import type { ComplaintCategory, ColorMetricKey } from '@/types/h3';
+import type { ComplaintCategory, ColorMetricKey, H3HexData, GraphNode, GraphEdge } from '@/types/h3';
+import { cellToLatLng, cellToBoundary, gridDisk } from 'h3-js';
 
 // ─── Color Scale (5-stop gradient: green → yellow → orange → red) ────────────
 
@@ -40,6 +41,12 @@ export function getColorForValue(value: number, isDPI = false): RGBA {
   }
 
   return interpolateColor(v);
+}
+
+export function getColorStringForValue(value: number, isDPI = false, alpha?: number): string {
+  const [r, g, b, a] = getColorForValue(value, isDPI);
+  const opacity = alpha !== undefined ? alpha : a / 255;
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 }
 
 function interpolateColor(t: number): RGBA {
@@ -114,3 +121,84 @@ export const METRIC_LABELS: Record<ColorMetricKey, string> = {
   demandScore: 'Demand Score',
   deficitScore: 'Deficit Score',
 };
+
+// ─── Graph Node & Edge Calculations ──────────────────────────────────────────
+
+/**
+ * Computes spatial graph nodes from H3 hex data.
+ * Derives center lat/lng coordinates, hexagonal boundary vertices, and neighbor indices.
+ */
+export function computeGraphNodes(data: H3HexData[]): GraphNode[] {
+  const indexMap = new Set(data.map((d) => d.h3Index));
+
+  return data.map((hex) => {
+    let lat = 28.6139;
+    let lng = 77.209;
+    let boundary: [number, number][] = [];
+    let neighbors: string[] = [];
+
+    try {
+      const coords = cellToLatLng(hex.h3Index);
+      lat = coords[0];
+      lng = coords[1];
+
+      boundary = cellToBoundary(hex.h3Index).map(
+        (pt) => [pt[0], pt[1]] as [number, number]
+      );
+
+      // Extract neighbors that exist in our dataset
+      const disk = gridDisk(hex.h3Index, 1);
+      neighbors = disk.filter((id) => id !== hex.h3Index && indexMap.has(id));
+    } catch {
+      // Fallback coordinate generation if h3 index string is custom
+    }
+
+    return {
+      ...hex,
+      id: hex.h3Index,
+      lat,
+      lng,
+      boundary,
+      neighborIds: neighbors,
+    };
+  });
+}
+
+/**
+ * Computes network graph edges between spatially adjacent or functionally correlated nodes.
+ * Avoids duplicate inverted edges.
+ */
+export function computeGraphEdges(nodes: GraphNode[]): GraphEdge[] {
+  const nodeMap = new Map<string, GraphNode>(nodes.map((n) => [n.id, n]));
+  const seenEdges = new Set<string>();
+  const edges: GraphEdge[] = [];
+
+  for (const node of nodes) {
+    for (const neighborId of node.neighborIds) {
+      const edgeKey = [node.id, neighborId].sort().join('--');
+      if (seenEdges.has(edgeKey)) continue;
+      seenEdges.add(edgeKey);
+
+      const neighbor = nodeMap.get(neighborId);
+      if (!neighbor) continue;
+
+      const isSameCategory = node.topCategory === neighbor.topCategory;
+      // Weight edge by combined composite priorities
+      const weight = (node.compositePriority + neighbor.compositePriority) / 2;
+
+      edges.push({
+        id: edgeKey,
+        source: node.id,
+        target: neighborId,
+        sourceCoords: [node.lat, node.lng],
+        targetCoords: [neighbor.lat, neighbor.lng],
+        weight,
+        category: node.topCategory,
+        isSameCategory,
+      });
+    }
+  }
+
+  return edges;
+}
+

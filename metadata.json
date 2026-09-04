@@ -1,0 +1,8 @@
+{
+  "name": "CivicPulse AI",
+  "description": "Citizen Feedback & DPI Prioritization Engine with custom spatial node graph mapping and H3 hexagonal cluster visualization for urban infrastructure planning.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
