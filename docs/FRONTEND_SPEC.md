@@ -1,10 +1,10 @@
-# CivicPulse AI — Frontend Specification
+# CivicPulse BRICS — Frontend Specification
 
-> Last updated: 2026-09-03 (Agent Iteration #1)
+> Last updated: 2026-09-04 (Agent Iteration #2)
 
 ## Overview
 
-The frontend is a Next.js 16 (App Router) application built with TypeScript, React 19, and Tailwind CSS v4. The primary visualization is an interactive 3D hexagonal choropleth map powered by Deck.gl and Mapbox GL JS.
+The frontend is a Next.js 16 (App Router) application built with TypeScript, React 19, and Tailwind CSS v4. It features a high-contrast monochrome landing page with dark/light mode support and a full-viewport Deck.gl H3 hexagonal hotspot map dashboard.
 
 ---
 
@@ -15,19 +15,32 @@ The frontend is a Next.js 16 (App Router) application built with TypeScript, Rea
 ```
 client/
 ├── app/
-│   ├── layout.tsx          # Root layout (Inter font, metadata, dark theme)
-│   ├── globals.css         # Tailwind v4 + Mapbox GL overrides
-│   └── page.tsx            # Dashboard home (H3HotspotMap with mock data)
+│   ├── layout.tsx             # Root layout (ThemeProvider, fonts, metadata)
+│   ├── globals.css            # Tailwind v4 + dark mode + Mapbox overrides
+│   ├── page.tsx               # Landing page (server component composition)
+│   └── dashboard/
+│       └── page.tsx           # H3HotspotMap dashboard
 ├── components/
+│   ├── providers/
+│   │   └── ThemeProvider.tsx  # next-themes wrapper
+│   ├── landing/
+│   │   ├── Navbar.tsx         # Sticky nav with glassmorphism
+│   │   ├── HeroSection.tsx    # Hero with animated terminal
+│   │   ├── ProblemBento.tsx   # Problem bento grid
+│   │   ├── ArchitecturePipeline.tsx  # 4-step pipeline
+│   │   ├── InteractiveScoring.tsx    # Formula + sliders
+│   │   ├── DemoTeaser.tsx     # Hex grid preview
+│   │   ├── Footer.tsx         # Minimalist footer
+│   │   └── ThemeToggle.tsx    # Sun/Moon animated toggle
 │   └── map/
 │       ├── H3HotspotMap.tsx   # Main map component
 │       ├── MapControls.tsx    # Overlay control panel
 │       └── MapTooltip.tsx     # Hover tooltip
 ├── lib/
-│   ├── map-utils.ts          # Color scale, formatting utilities
-│   └── mock-h3-data.ts       # Mock data generator
+│   ├── map-utils.ts           # Color scale, formatting utilities
+│   └── mock-h3-data.ts        # Mock data generator
 └── types/
-    └── h3.ts                 # TypeScript interfaces
+    └── h3.ts                  # TypeScript interfaces
 ```
 
 ### Client-Side Rendering Strategy

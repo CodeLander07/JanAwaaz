@@ -4,6 +4,66 @@
 
 ---
 
+## [2026-09-04] Iteration #2 — CivicPulse BRICS Landing Page
+
+### Summary
+Built a complete, responsive, dark/light mode landing page with strict high-contrast monochrome design system (Linear/Vercel aesthetic). Restructured routing to move the H3 map to `/dashboard`.
+
+### Actions Performed
+
+#### 1. Dependency Installation
+- Installed `next-themes` for class-based dark/light mode switching
+- Installed `framer-motion` for scroll reveal animations and layout transitions
+
+#### 2. Route Restructuring
+- Moved map dashboard from `app/page.tsx` → `app/dashboard/page.tsx`
+- Created new landing page at `app/page.tsx` composing all section components
+
+#### 3. Theme System
+- Created `components/providers/ThemeProvider.tsx` (next-themes wrapper)
+- Created `components/landing/ThemeToggle.tsx` (Sun/Moon animated toggle)
+- Updated `globals.css` with `@custom-variant dark` for class-based dark mode in Tailwind v4
+- Updated `layout.tsx` with `suppressHydrationWarning` and ThemeProvider wrapper
+
+#### 4. Landing Components Created
+- **Navbar.tsx**: Sticky glassmorphism nav, brand lockup, anchor links, mobile hamburger
+- **HeroSection.tsx**: DPG badge with pulse, 80px headline, dual CTAs, animated terminal cycling Hindi/Portuguese/Arabic voice streams
+- **ProblemBento.tsx**: 3-card asymmetric bento grid (Fragmented Channels, Affluence Bias, Unmonitored DPI)
+- **ArchitecturePipeline.tsx**: 4-step pipeline (Ingestion → Geo-Binning → Data Fusion → Policy Allocation)
+- **InteractiveScoring.tsx**: Formula display + 4 weight sliders + live-ranked project table with Framer Motion layout animations
+- **DemoTeaser.tsx**: CSS hex grid preview with 2D/3D and Demand/Vulnerability toggles + dashboard CTA
+- **Footer.tsx**: 4-column minimalist footer with open-source, DPG, specs, docs links
+
+#### 5. Design System
+- Strict monochrome palette: true black/white with neutral grays
+- Inter (sans) + JetBrains Mono (monospace) typography
+- Swiss-grid aesthetics: dot grid backgrounds, editorial dividers
+- Glassmorphism: `backdrop-blur-md bg-black/70 border-neutral-800`
+
+### Files Created
+| File | Purpose |
+| ---- | ------- |
+| `components/providers/ThemeProvider.tsx` | next-themes wrapper |
+| `components/landing/ThemeToggle.tsx` | Animated theme toggle |
+| `components/landing/Navbar.tsx` | Sticky navigation |
+| `components/landing/HeroSection.tsx` | Hero with terminal |
+| `components/landing/ProblemBento.tsx` | Problem bento grid |
+| `components/landing/ArchitecturePipeline.tsx` | 4-step pipeline |
+| `components/landing/InteractiveScoring.tsx` | Formula + sliders |
+| `components/landing/DemoTeaser.tsx` | Hex grid preview |
+| `components/landing/Footer.tsx` | Minimalist footer |
+| `app/dashboard/page.tsx` | Map dashboard (moved) |
+
+### Files Modified
+| File | Change |
+| ---- | ------ |
+| `app/page.tsx` | Landing page composition |
+| `app/layout.tsx` | ThemeProvider, fonts, metadata |
+| `app/globals.css` | Class-based dark mode, monochrome styles |
+| `package.json` | Added next-themes, framer-motion |
+
+---
+
 ## [2026-09-03] Iteration #1 — H3HotspotMap Component & Project Foundation
 
 ### Summary
