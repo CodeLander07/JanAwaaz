@@ -49,7 +49,7 @@ export default function Navbar() {
           href="/"
           className="font-mono text-xs sm:text-sm font-bold tracking-[0.2em] text-black dark:text-white hover:opacity-70 transition-opacity"
         >
-          CIVICPULSE<span className="text-neutral-400 dark:text-neutral-600"> // </span>BRICS-DPI
+          CIVICPULSE<span className="text-neutral-400 dark:text-neutral-600">{' // '}</span>BRICS-DPI
         </Link>
 
         {/* Desktop Navigation Links */}
