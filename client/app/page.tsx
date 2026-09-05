@@ -3,9 +3,9 @@ import Link from 'next/link'
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold mb-4">CivicPulse</h1>
+      <h1 className="text-4xl font-bold mb-4">JanAwaaz</h1>
       <p className="text-xl text-gray-600 mb-8">
-        Multilingual AI Platform for Citizen-Driven Infrastructure Planning
+        AI-powered platform to transform citizen feedback into actionable infrastructure development insights.
       </p>
       <div className="flex gap-4">
         <Link 
