@@ -1,26 +1,27 @@
-import Link from 'next/link'
+import { Header } from "@/components/landing/Header";
+import { Hero } from "@/components/landing/Hero";
+import { TrustBar } from "@/components/landing/TrustBar";
+import { About } from "@/components/landing/About";
+import { Features } from "@/components/landing/Features";
+import { HowItWorks } from "@/components/landing/HowItWorks";
+import { Impact } from "@/components/landing/Impact";
+import { AuthSection } from "@/components/landing/AuthSection";
+import { Footer } from "@/components/landing/Footer";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold mb-4">JanAwaaz</h1>
-      <p className="text-xl text-gray-600 mb-8">
-        AI-powered platform to transform citizen feedback into actionable infrastructure development insights.
-      </p>
-      <div className="flex gap-4">
-        <Link 
-          href="/dashboard" 
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
-        >
-          View Dashboard
-        </Link>
-        <Link 
-          href="/submit" 
-          className="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition"
-        >
-          Submit Feedback
-        </Link>
-      </div>
-    </main>
-  )
+    <>
+      <Header />
+      <main>
+        <Hero />
+        <TrustBar />
+        <About />
+        <Features />
+        <HowItWorks />
+        <Impact />
+        <AuthSection />
+      </main>
+      <Footer />
+    </>
+  );
 }
