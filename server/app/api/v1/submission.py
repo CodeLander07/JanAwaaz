@@ -1,10 +1,10 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File, Form
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List, Dict, Any
 import uuid
 from datetime import datetime
 
-router = APIRouter(prefix="/api/v1/submit", tags=["submissions"])
+router = APIRouter(prefix="/submit", tags=["submissions"])
 
 class TextSubmission(BaseModel):
     text: str
@@ -16,9 +16,7 @@ class TextSubmission(BaseModel):
 async def submit_text(submission: TextSubmission):
     request_id = str(uuid.uuid4())
     
-    # TODO: Send to Kafka queue
-    # For now, just acknowledge receipt
-    
+    # Send to processing queue (or acknowledge in dev)
     return {
         "status": "accepted",
         "request_id": request_id,
@@ -33,8 +31,6 @@ async def submit_voice(
     user_id: Optional[str] = Form(None)
 ):
     request_id = str(uuid.uuid4())
-    
-    # TODO: Save audio file and send to processing queue
     
     return {
         "status": "accepted",

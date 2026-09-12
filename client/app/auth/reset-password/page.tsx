@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useState, Suspense, type FormEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import axios from 'axios';
@@ -56,11 +56,7 @@ function PasswordStrengthBar({ password }: { password: string }) {
   );
 }
 
-/**
- * Reset-password page — reads the token from search params,
- * shows an error card if missing, otherwise shows the reset form.
- */
-export default function ResetPasswordPage() {
+function ResetPasswordForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const toast = useToast();
@@ -197,5 +193,13 @@ export default function ResetPasswordPage() {
         </Link>
       </div>
     </AuthCard>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<div className="flex justify-center p-12 text-gray-400">Loading...</div>}>
+      <ResetPasswordForm />
+    </Suspense>
   );
 }

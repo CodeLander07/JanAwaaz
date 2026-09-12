@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, type FormEvent } from 'react';
+import { useState, useEffect, Suspense, type FormEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import axios from 'axios';
@@ -27,10 +27,10 @@ function getSignInError(status: number): string {
 }
 
 /**
- * Sign-in page — email/password login with error mapping,
+ * Sign-in page content — email/password login with error mapping,
  * social buttons, forgot-password link, and password-reset success banner.
  */
-export default function SignInPage() {
+function SignInContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { login, user, loading: authLoading } = useAuth();
@@ -164,5 +164,13 @@ export default function SignInPage() {
         </Link>
       </p>
     </AuthCard>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={<div className="flex justify-center p-12 text-gray-400">Loading...</div>}>
+      <SignInContent />
+    </Suspense>
   );
 }

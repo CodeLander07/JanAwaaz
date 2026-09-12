@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/Button";
+import { useAuth } from "@/context/AuthContext";
 
 const navLinks = [
   { label: "Home", href: "#" },
@@ -19,6 +20,7 @@ const navLinks = [
  * and a mobile hamburger menu with full-screen overlay.
  */
 export function Header() {
+  const { user } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -80,15 +82,31 @@ export function Header() {
 
         {/* Desktop Actions */}
         <div className="hidden lg:flex items-center gap-4">
-          <Link
-            href="/auth/signin"
-            className="text-sm font-medium text-gray-600 hover:text-black transition-colors"
-          >
-            Sign In
-          </Link>
-          <Button href="/auth/signup" size="default">
-            Get Started
-          </Button>
+          {user ? (
+            <>
+              <Link
+                href="/dashboard"
+                className="text-sm font-medium text-gray-600 hover:text-black transition-colors"
+              >
+                Dashboard
+              </Link>
+              <Button href="/dashboard" size="default">
+                Hi, {user.full_name.split(' ')[0]}
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/auth/signin"
+                className="text-sm font-medium text-gray-600 hover:text-black transition-colors"
+              >
+                Sign In
+              </Link>
+              <Button href="/auth/signup" size="default">
+                Get Started
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Mobile Hamburger */}
@@ -131,20 +149,32 @@ export function Header() {
               ))}
             </nav>
             <div className="flex flex-col items-center gap-4 mt-4">
-              <Link
-                href="/auth/signin"
-                className="text-base font-medium text-gray-600"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Sign In
-              </Link>
-              <Button
-                href="/auth/signup"
-                size="lg"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Get Started
-              </Button>
+              {user ? (
+                <Button
+                  href="/dashboard"
+                  size="lg"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Go to Dashboard
+                </Button>
+              ) : (
+                <>
+                  <Link
+                    href="/auth/signin"
+                    className="text-base font-medium text-gray-600"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Sign In
+                  </Link>
+                  <Button
+                    href="/auth/signup"
+                    size="lg"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Get Started
+                  </Button>
+                </>
+              )}
             </div>
           </motion.div>
         )}
