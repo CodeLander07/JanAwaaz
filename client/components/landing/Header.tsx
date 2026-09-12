@@ -46,7 +46,7 @@ export function Header() {
     >
       <div className="w-full max-w-[1280px] mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link href="#" className="flex items-center gap-2 group">
+        <Link href="/" className="flex items-center gap-2 group">
           {/* Sound-wave icon */}
           <svg
             width="28"
@@ -81,12 +81,12 @@ export function Header() {
         {/* Desktop Actions */}
         <div className="hidden lg:flex items-center gap-4">
           <Link
-            href="#auth"
+            href="/auth/signin"
             className="text-sm font-medium text-gray-600 hover:text-black transition-colors"
           >
             Sign In
           </Link>
-          <Button href="#auth" size="default">
+          <Button href="/auth/signup" size="default">
             Get Started
           </Button>
         </div>
@@ -132,14 +132,14 @@ export function Header() {
             </nav>
             <div className="flex flex-col items-center gap-4 mt-4">
               <Link
-                href="#auth"
+                href="/auth/signin"
                 className="text-base font-medium text-gray-600"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Sign In
               </Link>
               <Button
-                href="#auth"
+                href="/auth/signup"
                 size="lg"
                 onClick={() => setMobileMenuOpen(false)}
               >

@@ -1,13 +1,27 @@
 from pydantic_settings import BaseSettings
-from typing import List
+from typing import List, Optional
 
 class Settings(BaseSettings):
     # App
     APP_NAME: str = "CivicPulse API"
     DEBUG: bool = True
-    ALLOWED_ORIGINS: List[str] = ["http://localhost:3000"]
+    ALLOWED_ORIGINS: List[str] = [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:8000",
+    ]
+    
+    # Auth & Security
+    SECRET_KEY: str = "civicpulse-jwt-secret-key-super-secure-2026-production"
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 7
+    RESET_TOKEN_EXPIRE_MINUTES: int = 60
+    COOKIE_SECURE: bool = False
+    COOKIE_SAMESITE: str = "lax"
     
     # Database
+    DATABASE_URL: Optional[str] = None
     POSTGRES_HOST: str = "localhost"
     POSTGRES_PORT: int = 5432
     POSTGRES_DB: str = "civicpulse"
@@ -23,5 +37,6 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         case_sensitive = True
+        extra = "allow"
 
 settings = Settings()
